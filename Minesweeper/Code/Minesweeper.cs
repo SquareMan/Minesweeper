@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Input.InputListeners;
+using MonoGame.Extended.NuclexGui;
+using MonoGame.Extended.NuclexGui.Controls.Desktop;
 
 namespace Minesweeper
 {
@@ -11,11 +14,23 @@ namespace Minesweeper
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
+        InputListenerComponent _inputManager;
+        GuiManager _gui;
+
+        GuiButtonControl button;
+        GuiVerticalSliderControl slider;
+
         public Minesweeper()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
+
+            _inputManager = new InputListenerComponent(this);
+
+            var guiInputService = new GuiInputService(_inputManager);
+            _gui = new GuiManager(Services, guiInputService);
         }
 
         /// <summary>
@@ -26,7 +41,26 @@ namespace Minesweeper
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _gui.Screen = new GuiScreen(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            _gui.Screen.Desktop.Bounds = new UniRectangle(new UniScalar(0f, 0), new UniScalar(0f, 0), new UniScalar(1f, 0), new UniScalar(1f, 0));
+            _gui.Initialize();
+
+            button = new GuiButtonControl {
+                Name = "button",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0, 20), 100, 24),
+                Text = "Quit Game",
+            };
+
+            button.Pressed += (object sender, System.EventArgs e) => { Exit(); };
+
+            _gui.Screen.Desktop.Children.Add(button);
+
+            slider = new GuiVerticalSliderControl {
+                Name = "slider",
+                Bounds = new UniRectangle(20, 20, 20, 200),
+                ThumbSize = .2f
+            };
+            _gui.Screen.Desktop.Children.Add(slider);
 
             base.Initialize();
         }
@@ -44,15 +78,6 @@ namespace Minesweeper
         }
 
         /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
@@ -62,7 +87,10 @@ namespace Minesweeper
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            button.Bounds.Location.Y = slider.Bounds.Top + slider.ThumbPosition * slider.Bounds.Size.Y;
+
+            _inputManager.Update(gameTime);
+            _gui.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -74,8 +102,8 @@ namespace Minesweeper
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
+            
+            _gui.Draw(gameTime);
 
             base.Draw(gameTime);
         }
