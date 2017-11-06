@@ -35,6 +35,9 @@ namespace Minesweeper {
             _gameController.Initialize();
 
             base.Initialize();
+
+            //After the game has been initialized, go to the main menu
+            _gameController.MainMenu();
         }
 
         /// <summary>
