@@ -12,18 +12,18 @@ namespace Minesweeper
     /// </summary>
     public class Minesweeper : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
 
-        InputListenerComponent _inputManager;
-        GuiManager _gui;
+        private readonly InputListenerComponent _inputManager;
+        private readonly GuiManager _gui;
 
-        GuiButtonControl button;
-        GuiVerticalSliderControl slider;
+        private GuiButtonControl _button;
+        private GuiVerticalSliderControl _slider;
 
         public Minesweeper()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
@@ -45,22 +45,22 @@ namespace Minesweeper
             _gui.Screen.Desktop.Bounds = new UniRectangle(new UniScalar(0f, 0), new UniScalar(0f, 0), new UniScalar(1f, 0), new UniScalar(1f, 0));
             _gui.Initialize();
 
-            button = new GuiButtonControl {
+            _button = new GuiButtonControl {
                 Name = "button",
                 Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0, 20), 100, 24),
                 Text = "Quit Game",
             };
 
-            button.Pressed += (object sender, System.EventArgs e) => { Exit(); };
+            _button.Pressed += (sender, e) => { Exit(); };
 
-            _gui.Screen.Desktop.Children.Add(button);
+            _gui.Screen.Desktop.Children.Add(_button);
 
-            slider = new GuiVerticalSliderControl {
+            _slider = new GuiVerticalSliderControl {
                 Name = "slider",
                 Bounds = new UniRectangle(20, 20, 20, 200),
                 ThumbSize = .2f
             };
-            _gui.Screen.Desktop.Children.Add(slider);
+            _gui.Screen.Desktop.Children.Add(_slider);
 
             base.Initialize();
         }
@@ -72,7 +72,7 @@ namespace Minesweeper
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
@@ -87,7 +87,7 @@ namespace Minesweeper
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            button.Bounds.Location.Y = slider.Bounds.Top + slider.ThumbPosition * slider.Bounds.Size.Y;
+            _button.Bounds.Location.Y = _slider.Bounds.Top + _slider.ThumbPosition * _slider.Bounds.Size.Y;
 
             _inputManager.Update(gameTime);
             _gui.Update(gameTime);
