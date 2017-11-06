@@ -51,7 +51,7 @@ namespace Minesweeper.Controller {
             if (CurrentState == GameState.Running)
                 throw new Exception("Cannot Start a new game if game is currently running");
             CurrentState = GameState.Running;
-            _gameBoard = new GameBoard();
+            _gameBoard = new GameBoard(10,10);
             Debug.WriteLine("GameStarted");
         }
 
