@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
@@ -12,13 +13,8 @@ namespace Minesweeper {
     /// </summary>
     public class Minesweeper : Game {
         private readonly GameController _gameController;
-        private readonly GuiManager _gui;
 
-        private readonly InputListenerComponent _inputManager;
-
-        private GuiButtonControl _button;
         private GraphicsDeviceManager _graphics;
-        private GuiVerticalSliderControl _slider;
         private SpriteBatch _spriteBatch;
 
         public Minesweeper() {
@@ -26,12 +22,7 @@ namespace Minesweeper {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _inputManager = new InputListenerComponent(this);
-
-            var guiInputService = new GuiInputService(_inputManager);
-            _gui = new GuiManager(Services, guiInputService);
-
-            _gameController = new GameController();
+            _gameController = new GameController(this);
         }
 
         /// <summary>
@@ -41,27 +32,7 @@ namespace Minesweeper {
         ///     and initialize them as well.
         /// </summary>
         protected override void Initialize() {
-            _gui.Screen = new GuiScreen(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            _gui.Screen.Desktop.Bounds = new UniRectangle(
-                new UniScalar(0f, 0), new UniScalar(0f, 0), new UniScalar(1f, 0), new UniScalar(1f, 0));
-            _gui.Initialize();
-
-            _button = new GuiButtonControl {
-                Name = "button",
-                Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0, 20), 100, 24),
-                Text = "Start Game"
-            };
-
-            _button.Pressed += (sender, e) => { GameController.Instance.StartGame(); };
-
-            _gui.Screen.Desktop.Children.Add(_button);
-
-            _slider = new GuiVerticalSliderControl {
-                Name = "slider",
-                Bounds = new UniRectangle(20, 20, 20, 200),
-                ThumbSize = .2f
-            };
-            _gui.Screen.Desktop.Children.Add(_slider);
+            _gameController.Initialize();
 
             base.Initialize();
         }
@@ -71,7 +42,6 @@ namespace Minesweeper {
         ///     all of your content.
         /// </summary>
         protected override void LoadContent() {
-            // Create a new SpriteBatch, which can be used to draw textures.
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -85,10 +55,7 @@ namespace Minesweeper {
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _button.Bounds.Location.Y = _slider.Bounds.Top + _slider.ThumbPosition * _slider.Bounds.Size.Y;
-
-            _inputManager.Update(gameTime);
-            _gui.Update(gameTime);
+            _gameController.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -100,7 +67,7 @@ namespace Minesweeper {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _gui.Draw(gameTime);
+            _gameController.Draw(gameTime);
 
             base.Draw(gameTime);
         }
