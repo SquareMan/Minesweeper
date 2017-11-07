@@ -44,10 +44,14 @@
   <ItemGroup>
     <Compile Include="Code\Controller\GameController.cs" />
     <Compile Include="Code\Minesweeper.cs" />
+    <Compile Include="Code\Model\ComponentTest.cs" />
     <Compile Include="Code\Model\GameBoard.cs" />
     <Compile Include="Code\Model\Tile.cs" />
     <Compile Include="Code\Program.cs" />
+    <Compile Include="Code\View\GameObject.cs" />
+    <Compile Include="Code\View\GameObjectComponent.cs" />
     <Compile Include="Code\View\GUI\GUIMainMenu.cs" />
+    <Compile Include="Code\View\Scene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +124,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
+using Minesweeper.Model;
+using Minesweeper.View;
 using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Extended.NuclexGui;
 using MonoGame.Extended.NuclexGui.Controls.Desktop;
@@ -16,6 +18,10 @@ namespace Minesweeper {
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private Scene _sceneTest;
+
+        private GameObject _testObject;
 
         public Minesweeper() {
             _graphics = new GraphicsDeviceManager(this);
@@ -33,6 +39,9 @@ namespace Minesweeper {
         /// </summary>
         protected override void Initialize() {
             _gameController.Initialize();
+            _sceneTest = new Scene(this);
+            _testObject = GameObject.Instantiate();
+            _testObject.AddComponent(new ComponentTest());
 
             base.Initialize();
 
@@ -46,6 +55,7 @@ namespace Minesweeper {
         /// </summary>
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Services.AddService(typeof(SpriteBatch), _spriteBatch);
         }
 
         /// <summary>
@@ -59,6 +69,7 @@ namespace Minesweeper {
                 Exit();
 
             _gameController.Update(gameTime);
+            _sceneTest.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -70,6 +81,7 @@ namespace Minesweeper {
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            _sceneTest.Draw(gameTime);
             _gameController.Draw(gameTime);
 
             base.Draw(gameTime);
