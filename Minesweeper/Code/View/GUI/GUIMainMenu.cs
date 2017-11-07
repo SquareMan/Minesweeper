@@ -6,25 +6,11 @@ using MonoGame.Extended.NuclexGui.Controls.Desktop;
 
 namespace Minesweeper.View.GUI {
     public class GUIMainMenu : GuiWindowControl {
-        private readonly GuiManager _guiManager;
-
         private GuiButtonControl _button;
         private GuiVerticalSliderControl _slider;
-
-        //public GUIMainMenu(GuiManager guiManager) {
-        //    _guiManager = guiManager;
-        //}
+        
         public GUIMainMenu() {
             Initialize();
-        }
-
-        protected override bool OnKeyPressed(Keys keyCode) {
-            if (keyCode == Keys.Space) {
-                Close();
-                return true;
-            }
-            return false;
-            //return base.OnKeyPressed(keyCode);
         }
 
         private void Initialize() {
@@ -47,17 +33,7 @@ namespace Minesweeper.View.GUI {
         }
 
         public void Update() {
-            _button.Bounds.Location.Y = _slider.Bounds.Top + _slider.ThumbPosition * _slider.Bounds.Size.Y;
+            _button.Bounds.Location.Y = _slider.Bounds.Bottom - _button.Bounds.Size.Y - _slider.ThumbPosition * _slider.Bounds.Size.Y;
         }
-
-        //public void Open() {
-        //    _guiManager.Screen.Desktop.Children.Add(_button);
-        //    _guiManager.Screen.Desktop.Children.Add(_slider);
-        //}
-
-        //public void Close() {
-        //    _guiManager.Screen.Desktop.Children.Remove(_button);
-        //    _guiManager.Screen.Desktop.Children.Remove(_slider);
-        //}
     }
 }
