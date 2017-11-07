@@ -24,10 +24,12 @@ namespace Minesweeper.View.GUI {
             
             _slider = new GuiVerticalSliderControl {
                 Name = "slider",
-                Bounds = new UniRectangle(20, 20, 20, 200),
+                Bounds = new UniRectangle(new UniScalar(0.05f, 0f), new UniScalar(0.1f,0f), 20, 200),
                 ThumbSize = .2f
             };
-            this.Bounds = new UniRectangle(100.0f, 100.0f, 512.0f, 384.0f);
+            this.Bounds = new UniRectangle(new UniScalar(0.0f,0.0f), new UniScalar(0.0f,0.0f), new UniScalar(1.0f,1.0f), new UniScalar(1.0f,1.0f));
+            this.EnableDragging = false;
+
             Children.Add(_button);
             Children.Add(_slider);
         }

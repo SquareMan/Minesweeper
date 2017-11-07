@@ -62,8 +62,6 @@ namespace Minesweeper.Controller {
                 throw new Exception("Cannot Start a new game if game is currently running");
             CurrentState = GameState.Running;
             GameBoard = new GameBoard(10, 10);
-            //_guiMainMenu.Close();
-            //_gui.Screen.Desktop.Children.Remove(_guiMainMenu);
             _guiMainMenu.Close();
         }
 
