@@ -40,7 +40,7 @@ namespace Minesweeper {
         protected override void Initialize() {
             _gameController.Initialize();
             _sceneTest = new Scene(this);
-            _testObject = GameObject.Instantiate();
+            _testObject = new GameObject();
             _testObject.AddComponent(new ComponentTest());
 
             base.Initialize();

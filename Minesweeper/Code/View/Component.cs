@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
 namespace Minesweeper.View {
-    public abstract class GameObjectComponent {
+    public abstract class Component {
         public Transform Transform;
 
         public void OnAdd(GameObject parent) {

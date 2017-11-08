@@ -3,7 +3,7 @@ using Minesweeper.View;
 using MonoGame.Extended;
 
 namespace Minesweeper.Model {
-    public class ComponentTest : GameObjectComponent {
+    public class ComponentTest : Component {
         public override void Draw(GameTime gameTime) {
             Transform.GameObject.Scene.SpriteBatch.DrawRectangle(Transform.Position, new Size2(200,200), Color.Blue, 12f);
         }

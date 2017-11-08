@@ -49,7 +49,7 @@
     <Compile Include="Code\Model\Tile.cs" />
     <Compile Include="Code\Program.cs" />
     <Compile Include="Code\View\GameObject.cs" />
-    <Compile Include="Code\View\GameObjectComponent.cs" />
+    <Compile Include="Code\View\Component.cs" />
     <Compile Include="Code\View\GUI\GUIMainMenu.cs" />
     <Compile Include="Code\View\Scene.cs" />
     <Compile Include="Code\View\Transform.cs" />
