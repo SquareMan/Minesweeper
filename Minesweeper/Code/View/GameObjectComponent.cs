@@ -2,10 +2,10 @@
 
 namespace Minesweeper.View {
     public abstract class GameObjectComponent {
-        public GameObject Parent;
+        public Transform Transform;
 
         public void OnAdd(GameObject parent) {
-            Parent = parent;
+            Transform = parent.Transform;
         }
 
         public abstract void Draw(GameTime gameTime);

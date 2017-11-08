@@ -7,16 +7,20 @@ namespace Minesweeper.View {
         private readonly List<GameObjectComponent> Components = new List<GameObjectComponent>();
 
         public readonly Scene Scene;
+
+        public Transform Transform;
+        public GameObject Parent;
         public List<GameObject> Children = new List<GameObject>();
 
-        public GameObject Parent;
-        public Vector2 Position;
 
         private GameObject(GameObject parent, Vector2 position) {
             Parent = parent;
-            Position = position;
             Scene = Scene.GetActiveScene();
             Scene.GameObjects.Add(this);
+
+            Transform = new Transform(this) {
+                Position = position
+            };
         }
 
         /// <summary>

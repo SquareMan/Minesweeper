@@ -52,6 +52,7 @@
     <Compile Include="Code\View\GameObjectComponent.cs" />
     <Compile Include="Code\View\GUI\GUIMainMenu.cs" />
     <Compile Include="Code\View\Scene.cs" />
+    <Compile Include="Code\View\Transform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
