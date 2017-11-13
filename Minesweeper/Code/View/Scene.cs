@@ -3,35 +3,33 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Minesweeper.View {
-    public class Scene {
-        //TODO: Remove this and create a more robust SceneManager
-        static Scene ActiveScene;
-
+    public class Scene : DrawableGameComponent {
         public List<GameObject> GameObjects = new List<GameObject>();
-        public SpriteBatch SpriteBatch;
+        private SpriteBatch SpriteBatch;
 
-        public Scene(Game game) {
-            ActiveScene = this;
+        public Scene(Game game) : base(game) {
             SpriteBatch = new SpriteBatch(game.GraphicsDevice);
         }
 
-        [System.Obsolete]
-        public static Scene GetActiveScene() {
-            return ActiveScene;
-        }
-
-        public void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             foreach (var go in GameObjects) {
                 go.Update(gameTime);
             }
         }
 
-        public void Draw(GameTime gameTime) {
+        public override void Draw(GameTime gameTime) {
             SpriteBatch.Begin();
             foreach (var go in GameObjects) {
-                go.Draw(gameTime);
+                go.Draw(SpriteBatch, gameTime);
             }
             SpriteBatch.End();
+        }
+
+        public new void Dispose() {
+            while(GameObjects.Count > 0) {
+                GameObjects[0].Destroy();
+                GameObjects.Remove(GameObjects[0]);
+            }
         }
     }
 }

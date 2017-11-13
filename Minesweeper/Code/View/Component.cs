@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Minesweeper.View {
     public abstract class Component {
@@ -8,7 +9,7 @@ namespace Minesweeper.View {
             Transform = parent.Transform;
         }
 
-        public virtual void Draw(GameTime gameTime) { }
+        public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) { }
         public virtual void Update(GameTime gameTime) { }
     }
 }

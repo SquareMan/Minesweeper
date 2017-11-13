@@ -19,8 +19,6 @@ namespace Minesweeper {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Scene _sceneTest;
-
         private GameObject _testObject;
 
         public Minesweeper() {
@@ -39,7 +37,8 @@ namespace Minesweeper {
         /// </summary>
         protected override void Initialize() {
             _gameController.Initialize();
-            _sceneTest = new Scene(this);
+
+            SceneManager.Initialize(this);
             _testObject = new GameObject();
             _testObject.AddComponent<ComponentTest>();
 
@@ -47,6 +46,8 @@ namespace Minesweeper {
 
             //After the game has been initialized, go to the main menu
             _gameController.MainMenu();
+            SceneManager.UnloadScene();
+            _testObject = null;
         }
 
         /// <summary>
@@ -69,7 +70,6 @@ namespace Minesweeper {
                 Exit();
 
             _gameController.Update(gameTime);
-            _sceneTest.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -80,8 +80,7 @@ namespace Minesweeper {
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            _sceneTest.Draw(gameTime);
+            
             _gameController.Draw(gameTime);
 
             base.Draw(gameTime);

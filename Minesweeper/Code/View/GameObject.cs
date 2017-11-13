@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Minesweeper.View {
     public sealed class GameObject {
         //List of custom scripts that can be attached to a GameObject and run
-        private readonly List<Component> Components = new List<Component>();
+        private List<Component> Components = new List<Component>();
 
-        public readonly Scene Scene;
+        public Scene Scene;
 
-        public readonly Transform Transform;
+        public Transform Transform;
 
         public string Name = "GameObject";
         public GameObject Parent;
@@ -18,7 +19,7 @@ namespace Minesweeper.View {
         //GameObject(Name)
         //GameObject(Parent)
         public GameObject() {
-            Scene = Scene.GetActiveScene();
+            Scene = SceneManager.ActiveScene;
             Scene.GameObjects.Add(this);
             Transform = new Transform(this);
         }
@@ -26,7 +27,7 @@ namespace Minesweeper.View {
 
         public GameObject(GameObject parent = null, Vector2? position = null) {
             Parent = parent;
-            Scene = Scene.GetActiveScene();
+            Scene = SceneManager.ActiveScene;
             Scene.GameObjects.Add(this);
 
             Transform = new Transform(this) {
@@ -73,10 +74,16 @@ namespace Minesweeper.View {
         /// This method will be called every frame
         /// </summary>
         /// <param name="gameTime">Time values for the game</param>
-        public void Draw(GameTime gameTime) {
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
             foreach (var component in Components) {
-                component.Draw(gameTime);
+                component.Draw(spriteBatch, gameTime);
             }
+        }
+
+        public void Destroy() {
+            Components = null;
+            Scene = null;
+            Transform = null;
         }
     }
 }
