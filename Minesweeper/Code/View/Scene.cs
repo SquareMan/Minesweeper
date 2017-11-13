@@ -15,6 +15,7 @@ namespace Minesweeper.View {
             SpriteBatch = new SpriteBatch(game.GraphicsDevice);
         }
 
+        [System.Obsolete]
         public static Scene GetActiveScene() {
             return ActiveScene;
         }

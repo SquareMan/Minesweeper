@@ -23,7 +23,6 @@ namespace Minesweeper.Controller {
 
         public GameController(Minesweeper game) {
             Instance = this;
-
             _game = game;
 
             //Setup GUI

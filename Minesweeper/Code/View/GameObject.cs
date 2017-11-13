@@ -17,6 +17,12 @@ namespace Minesweeper.View {
         //GameObject()
         //GameObject(Name)
         //GameObject(Parent)
+        public GameObject() {
+            Scene = Scene.GetActiveScene();
+            Scene.GameObjects.Add(this);
+            Transform = new Transform(this);
+        }
+
 
         public GameObject(GameObject parent = null, Vector2? position = null) {
             Parent = parent;
@@ -39,18 +45,19 @@ namespace Minesweeper.View {
         }
 
         /// <summary>
-        /// Use this method to attach a script to this GameObject
+        /// Adds a component to the GameObject
         /// </summary>
-        /// <param name="component">An instance of the script to attach</param>
-        //public void AddComponent<T>() where T : Component {
-
-        //}
-
-        public void AddComponent(Component component)
-        {
+        /// <typeparam name="T">The Type of the component you want to add</typeparam>
+        public void AddComponent<T>() where T : Component, new() {
+            T component = new T();
             Components.Add(component);
             component.OnAdd(this);
         }
+
+        //public void AddComponent(Component component) {
+        //    Components.Add(component);
+        //    component.OnAdd(this);
+        //}
 
         /// <summary>
         /// This method will be called every cycle

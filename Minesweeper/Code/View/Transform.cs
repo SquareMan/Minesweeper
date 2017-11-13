@@ -2,11 +2,11 @@
 
 namespace Minesweeper.View {
     public class Transform {
-        public GameObject GameObject;
+        public readonly GameObject GameObject;
 
-        public Vector2 Position;
+        public Vector2 Position = Vector2.Zero;
         public float Rotation;
-        public Vector2 Scale;
+        public Vector2 Scale = Vector2.One;
 
         /// <summary>
         /// Creates a new transform

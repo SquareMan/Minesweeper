@@ -41,7 +41,7 @@ namespace Minesweeper {
             _gameController.Initialize();
             _sceneTest = new Scene(this);
             _testObject = new GameObject();
-            _testObject.AddComponent(new ComponentTest());
+            _testObject.AddComponent<ComponentTest>();
 
             base.Initialize();
 

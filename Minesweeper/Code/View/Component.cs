@@ -8,7 +8,7 @@ namespace Minesweeper.View {
             Transform = parent.Transform;
         }
 
-        public abstract void Draw(GameTime gameTime);
-        public abstract void Update(GameTime gameTime);
+        public virtual void Draw(GameTime gameTime) { }
+        public virtual void Update(GameTime gameTime) { }
     }
 }
