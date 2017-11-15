@@ -17,7 +17,7 @@ namespace Minesweeper.View {
             //TODO: Implement Scene file format and load with this method
             //Create a new ActiveScene instead
             _game.Components.Remove(ActiveScene);
-            ActiveScene?.Dispose();
+            //ActiveScene?.Dispose();
             ActiveScene = new Scene(_game);
             _game.Components.Add(ActiveScene);
         }
@@ -28,7 +28,7 @@ namespace Minesweeper.View {
             }
 
             _game.Components.Remove(ActiveScene);
-            ActiveScene.Dispose();
+            //ActiveScene.Dispose();
             ActiveScene = null;
         }
     }

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Code\Controller\GameController.cs" />
     <Compile Include="Code\Minesweeper.cs" />
+    <Compile Include="Code\Model\ComponentOtherTest.cs" />
     <Compile Include="Code\Model\ComponentTest.cs" />
     <Compile Include="Code\Model\GameBoard.cs" />
     <Compile Include="Code\Model\Tile.cs" />

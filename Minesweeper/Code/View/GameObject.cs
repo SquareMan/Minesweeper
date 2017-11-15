@@ -31,7 +31,7 @@ namespace Minesweeper.View {
             Scene.GameObjects.Add(this);
 
             Transform = new Transform(this) {
-                Position = position ?? Vector2.Zero
+                LocalPosition = position ?? Vector2.Zero
             };
         }
 
@@ -61,7 +61,7 @@ namespace Minesweeper.View {
         //}
 
         /// <summary>
-        /// This method will be called every cycle
+        /// This method will be called every game update
         /// </summary>
         /// <param name="gameTime">Time values for the game</param>
         public void Update(GameTime gameTime) {
@@ -73,6 +73,7 @@ namespace Minesweeper.View {
         /// <summary>
         /// This method will be called every frame
         /// </summary>
+        /// <param name="spriteBatch">The scene's spritebatch</param>
         /// <param name="gameTime">Time values for the game</param>
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
             foreach (var component in Components) {

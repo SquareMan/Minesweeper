@@ -76,10 +76,6 @@ namespace Minesweeper.Controller {
         }
 
         public void Draw(GameTime gameTime) {
-            if (CurrentState == GameState.Running) {
-
-            }
-
             _gui.Draw(gameTime);
         }
     }

@@ -20,6 +20,7 @@ namespace Minesweeper {
         private SpriteBatch _spriteBatch;
 
         private GameObject _testObject;
+        private GameObject _testCircle;
 
         public Minesweeper() {
             _graphics = new GraphicsDeviceManager(this);
@@ -42,12 +43,13 @@ namespace Minesweeper {
             _testObject = new GameObject();
             _testObject.AddComponent<ComponentTest>();
 
+            _testCircle = new GameObject(_testObject, new Vector2(100, 100));
+            _testCircle.AddComponent<ComponentOtherTest>();
+
             base.Initialize();
 
             //After the game has been initialized, go to the main menu
             _gameController.MainMenu();
-            SceneManager.UnloadScene();
-            _testObject = null;
         }
 
         /// <summary>
@@ -56,7 +58,6 @@ namespace Minesweeper {
         /// </summary>
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Services.AddService(typeof(SpriteBatch), _spriteBatch);
         }
 
         /// <summary>
