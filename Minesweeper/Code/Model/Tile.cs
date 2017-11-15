@@ -4,6 +4,9 @@ using Minesweeper.Controller;
 
 namespace Minesweeper.Model {
     public class Tile {
+        public delegate void IntDelegate(int num);
+        public event IntDelegate OnTileRevealed;
+
         public readonly Point Position;
 
         public Tile(Point position) {
@@ -41,6 +44,8 @@ namespace Minesweeper.Model {
                 }
             }
 
+            OnTileRevealed?.Invoke(bombs);
+
             //If bombs == 0 call Reveal on each neighbor
             //Else This tile should show the number of bombs
             if (bombs == 0) {
@@ -53,12 +58,16 @@ namespace Minesweeper.Model {
         public Tile[] GetNeighbors() {
             var neighbors = new List<Tile>();
 
-            for (var x = -1; x <= 1; x++)
-            for (var y = -1; y <= 1; y++) {
-                //Skip ourselves
-                if (x == 0 && y == 0) continue;
+            for (var x = -1; x <= 1; x++) {
+                for (var y = -1; y <= 1; y++) {
+                    //Skip ourselves
+                    if (x == 0 && y == 0) continue;
 
-                neighbors.Add(GameController.Instance.GameBoard.GetTile(x + Position.X, y + Position.Y));
+                    var neighbor = GameController.Instance.GameBoard.GetTile(x + Position.X, y + Position.Y);
+
+                    if(neighbor != null)
+                        neighbors.Add(neighbor);
+                }
             }
 
             return neighbors.ToArray();

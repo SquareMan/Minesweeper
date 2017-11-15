@@ -14,6 +14,8 @@ namespace Minesweeper {
     ///     This is the main type for your game.
     /// </summary>
     public class Minesweeper : Game {
+        public static SpriteFont Font;
+
         private readonly GameController _gameController;
 
         private GraphicsDeviceManager _graphics;
@@ -50,6 +52,7 @@ namespace Minesweeper {
         /// </summary>
         protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Font = Content.Load<SpriteFont>("DefaultFont");
         }
 
         /// <summary>

@@ -68,7 +68,6 @@ namespace Minesweeper.Controller {
             GameBoard.OnTileCreated += CreateTileGameObject;
             GameBoard.OnTileDestroyed += DeleteTileGameObject;
             GameBoard.CreateBoard();
-            GameBoard.ClearBoard();
             _guiMainMenu.Close();
         }
 
@@ -89,7 +88,8 @@ namespace Minesweeper.Controller {
 
         void CreateTileGameObject(Tile t) {
             GameObject go = new GameObject(null, new Vector2(t.Position.X, t.Position.Y));
-            go.AddComponent<TileRenderer>();
+            var renderer = go.AddComponent<TileRenderer>();
+            t.OnTileRevealed += renderer.OnTileRevealed;
 
             _tileToGameObjectMap.Add(t, go);
         }
