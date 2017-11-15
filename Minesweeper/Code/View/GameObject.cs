@@ -46,6 +46,15 @@ namespace Minesweeper.View {
         }
 
         /// <summary>
+        /// Destroys an exisiting GameObject
+        /// </summary>
+        /// <param name="theObject">The object to be destroyed</param>
+        /// <returns></returns>
+        public static void Destroy(GameObject theObject) {
+            //TODO: Implment
+        }
+
+        /// <summary>
         /// Adds a component to the GameObject
         /// </summary>
         /// <typeparam name="T">The Type of the component you want to add</typeparam>
