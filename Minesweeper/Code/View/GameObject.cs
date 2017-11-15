@@ -52,6 +52,7 @@ namespace Minesweeper.View {
         /// <returns></returns>
         public static void Destroy(GameObject theObject) {
             //TODO: Implment
+            theObject.Destroy();
         }
 
         /// <summary>
@@ -91,6 +92,7 @@ namespace Minesweeper.View {
         }
 
         public void Destroy() {
+            Scene.GameObjects.Remove(this);
             Components = null;
             Scene = null;
             Transform = null;
