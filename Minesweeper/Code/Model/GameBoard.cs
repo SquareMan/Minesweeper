@@ -1,21 +1,25 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Minesweeper.Model {
     public class GameBoard {
         public delegate void TileDelegate(Tile tileChanged);
 
         public event TileDelegate OnTileCreated;
-        public event TileDelegate OnTileChanged;
         public event TileDelegate OnTileDestroyed;
 
         public readonly int Width;
         public readonly int Height;
+        public readonly int Bombs;
+
+        private Random rand = new Random();
 
         private readonly Tile[,] _tiles;
 
-        public GameBoard(int width, int height) {
+        public GameBoard(int width, int height, int bombs) {
             Width = width;
             Height = height;
+            Bombs = bombs;
             _tiles = new Tile[width,height];
         }
 
@@ -28,17 +32,30 @@ namespace Minesweeper.Model {
                     OnTileCreated?.Invoke(t);
                 }
             }
+
+            PlaceBombs();
+            _tiles[5,5].Reveal();
+        }
+
+        public void PlaceBombs() {
+            for (int x = 0; x < Width; x++) {
+                for (int y = 0; y < Height; y++) {
+                    //TODO: This places an uncertain amount of bombs, need to place the amount specified by Bombs
+                    if(rand.Next(Bombs) == 0)
+                        _tiles[x, y].AddBomb();
+                }
+            }
         }
 
         public void ClearBoard() {
             for (int x = 0; x < Width; x++) {
                 for (int y = 0; y < Height; y++) {
                     OnTileDestroyed?.Invoke(_tiles[x,y]);
+                    _tiles[x, y].Destroy();
                     _tiles[x, y] = null;
                 }
             }
             OnTileCreated = null;
-            OnTileChanged = null;
             OnTileDestroyed = null;
         }
 

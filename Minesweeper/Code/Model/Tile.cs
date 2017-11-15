@@ -21,6 +21,10 @@ namespace Minesweeper.Model {
             IsFlagged = !IsFlagged;
         }
 
+        public void AddBomb() {
+            IsBomb = true;
+        }
+
         public void Reveal() {
             if (IsFlagged)
                 return;
@@ -71,6 +75,10 @@ namespace Minesweeper.Model {
             }
 
             return neighbors.ToArray();
+        }
+
+        public void Destroy() {
+            OnTileRevealed = null;
         }
     }
 }

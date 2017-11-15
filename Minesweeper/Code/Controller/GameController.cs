@@ -6,6 +6,7 @@ using Minesweeper.View;
 using Minesweeper.View.GUI;
 using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Extended.NuclexGui;
+using MonoGame.Extended.NuclexGui.Controls.Desktop;
 
 namespace Minesweeper.Controller {
     public class GameController {
@@ -22,6 +23,8 @@ namespace Minesweeper.Controller {
         private readonly GuiManager _gui;
         private readonly InputListenerComponent _inputManager;
         private GUIMainMenu _guiMainMenu;
+
+        private GuiButtonControl _mainMenuButton;
 
         private Dictionary<Tile, GameObject> _tileToGameObjectMap;
 
@@ -50,11 +53,30 @@ namespace Minesweeper.Controller {
             _gui.Initialize();
 
             _guiMainMenu = new GUIMainMenu();
+
+            _mainMenuButton = new GuiButtonControl
+            {
+                Name = "MainMenuButton",
+                Bounds = new UniRectangle(new UniScalar(0.9f, -50), new UniScalar(0.9f, 20), 100, 24),
+                Text = "Main Menu"
+            };
+            _mainMenuButton.Pressed += (sender, e) => { MainMenu(); };
+
+            GameBoard = new GameBoard(10, 10, 10);
         }
 
         public void MainMenu() {
             if (CurrentState == GameState.MainMenu)
                 throw new Exception("Cannot go to the main menu if currently there");
+
+            if (CurrentState == GameState.Running) {
+                //We need to cleanup the game
+                GameBoard.OnTileCreated -= CreateTileGameObject;
+                GameBoard.OnTileDestroyed -= CreateTileGameObject;
+                GameBoard.ClearBoard();
+
+                _gui.Screen.Desktop.Children.Remove(_mainMenuButton);
+            }
             CurrentState = GameState.MainMenu;
             //_guiMainMenu.Open();
             _gui.Screen.Desktop.Children.Add(_guiMainMenu);
@@ -64,11 +86,11 @@ namespace Minesweeper.Controller {
             if (CurrentState == GameState.Running)
                 throw new Exception("Cannot Start a new game if game is currently running");
             CurrentState = GameState.Running;
-            GameBoard = new GameBoard(10, 10);
             GameBoard.OnTileCreated += CreateTileGameObject;
             GameBoard.OnTileDestroyed += DeleteTileGameObject;
             GameBoard.CreateBoard();
             _guiMainMenu.Close();
+            _gui.Screen.Desktop.Children.Add(_mainMenuButton);
         }
 
         public void QuitGame() {
