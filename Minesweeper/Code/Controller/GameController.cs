@@ -21,9 +21,9 @@ namespace Minesweeper.Controller {
 
         private readonly GuiManager _gui;
         private readonly InputListenerComponent _inputManager;
+        private GUIMainMenu _guiMainMenu;
 
         private Dictionary<Tile, GameObject> _tileToGameObjectMap;
-        private GUIMainMenu _guiMainMenu;
 
         public GameController(Minesweeper game) {
             Instance = this;
@@ -31,11 +31,11 @@ namespace Minesweeper.Controller {
 
             //Setup GUI
             _inputManager = new InputListenerComponent(game);
-
             var guiInputService = new GuiInputService(_inputManager);
+
             _gui = new GuiManager(game.Services, guiInputService);
 
-            //_guiMainMenu = new GUIMainMenu(_gui);
+            //Setup dictionary to hold tiles and their game objects
             _tileToGameObjectMap = new Dictionary<Tile, GameObject>();
         }
 
@@ -50,7 +50,6 @@ namespace Minesweeper.Controller {
             _gui.Initialize();
 
             _guiMainMenu = new GUIMainMenu();
-            //_guiMainMenu.Initialize();
         }
 
         public void MainMenu() {
@@ -88,8 +87,7 @@ namespace Minesweeper.Controller {
             _gui.Draw(gameTime);
         }
 
-        void CreateTileGameObject(Tile t)
-        {
+        void CreateTileGameObject(Tile t) {
             GameObject go = new GameObject(null, new Vector2(t.Position.X, t.Position.Y));
             go.AddComponent<TileRenderer>();
 
