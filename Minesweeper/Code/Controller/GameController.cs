@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Minesweeper.Model;
+using Minesweeper.View;
 using Minesweeper.View.GUI;
 using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Extended.NuclexGui;
@@ -19,6 +21,8 @@ namespace Minesweeper.Controller {
 
         private readonly GuiManager _gui;
         private readonly InputListenerComponent _inputManager;
+
+        private Dictionary<Tile, GameObject> _tileToGameObjectMap;
         private GUIMainMenu _guiMainMenu;
 
         public GameController(Minesweeper game) {
@@ -32,6 +36,7 @@ namespace Minesweeper.Controller {
             _gui = new GuiManager(game.Services, guiInputService);
 
             //_guiMainMenu = new GUIMainMenu(_gui);
+            _tileToGameObjectMap = new Dictionary<Tile, GameObject>();
         }
 
         public GameBoard GameBoard { get; private set; }
@@ -61,6 +66,10 @@ namespace Minesweeper.Controller {
                 throw new Exception("Cannot Start a new game if game is currently running");
             CurrentState = GameState.Running;
             GameBoard = new GameBoard(10, 10);
+            GameBoard.OnTileCreated += CreateTileGameObject;
+            GameBoard.OnTileDestroyed += DeleteTileGameObject;
+            GameBoard.CreateBoard();
+            GameBoard.ClearBoard();
             _guiMainMenu.Close();
         }
 
@@ -77,6 +86,22 @@ namespace Minesweeper.Controller {
 
         public void Draw(GameTime gameTime) {
             _gui.Draw(gameTime);
+        }
+
+        void CreateTileGameObject(Tile t)
+        {
+            GameObject go = new GameObject(null, new Vector2(t.Position.X, t.Position.Y));
+            go.AddComponent<TileRenderer>();
+
+            _tileToGameObjectMap.Add(t, go);
+        }
+
+        void DeleteTileGameObject(Tile t) {
+            GameObject go = _tileToGameObjectMap[t];
+
+            _tileToGameObjectMap.Remove(t);
+            //GameObject.Destroy(go);
+            go.Destroy();
         }
     }
 }

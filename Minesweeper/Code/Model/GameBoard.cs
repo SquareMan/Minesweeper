@@ -2,6 +2,12 @@
 
 namespace Minesweeper.Model {
     public class GameBoard {
+        public delegate void TileDelegate(Tile tileChanged);
+
+        public event TileDelegate OnTileCreated;
+        public event TileDelegate OnTileChanged;
+        public event TileDelegate OnTileDestroyed;
+
         public readonly int Width;
         public readonly int Height;
 
@@ -11,11 +17,29 @@ namespace Minesweeper.Model {
             Width = width;
             Height = height;
             _tiles = new Tile[width,height];
+        }
 
-            for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++) {
-                    _tiles[x,y] = new Tile(new Point(x,y));
+        public void CreateBoard() {
+            for (int x = 0; x < Width; x++) {
+                for (int y = 0; y < Height; y++) {
+                    Tile t = new Tile(new Point(x, y));
+
+                    _tiles[x, y] = t;
+                    OnTileCreated?.Invoke(t);
+                }
             }
+        }
+
+        public void ClearBoard() {
+            for (int x = 0; x < Width; x++) {
+                for (int y = 0; y < Height; y++) {
+                    OnTileDestroyed?.Invoke(_tiles[x,y]);
+                    _tiles[x, y] = null;
+                }
+            }
+            OnTileCreated = null;
+            OnTileChanged = null;
+            OnTileDestroyed = null;
         }
 
         public Tile GetTile(int x, int y) {

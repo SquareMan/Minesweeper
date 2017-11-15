@@ -4,10 +4,10 @@ using Minesweeper.Controller;
 
 namespace Minesweeper.Model {
     public class Tile {
-        private readonly Point _position;
+        public readonly Point Position;
 
         public Tile(Point position) {
-            _position = position;
+            Position = position;
         }
 
         public bool IsFlagged { get; private set; }
@@ -58,7 +58,7 @@ namespace Minesweeper.Model {
                 //Skip ourselves
                 if (x == 0 && y == 0) continue;
 
-                neighbors.Add(GameController.Instance.GameBoard.GetTile(x + _position.X, y + _position.Y));
+                neighbors.Add(GameController.Instance.GameBoard.GetTile(x + Position.X, y + Position.Y));
             }
 
             return neighbors.ToArray();

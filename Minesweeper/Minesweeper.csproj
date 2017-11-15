@@ -47,6 +47,7 @@
     <Compile Include="Code\Model\GameBoard.cs" />
     <Compile Include="Code\Model\Tile.cs" />
     <Compile Include="Code\Program.cs" />
+    <Compile Include="Code\View\Components\TileRenderer.cs" />
     <Compile Include="Code\View\GameObject.cs" />
     <Compile Include="Code\View\Component.cs" />
     <Compile Include="Code\View\GUI\GUIMainMenu.cs" />
