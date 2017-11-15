@@ -59,10 +59,12 @@ namespace Minesweeper.View {
         /// Adds a component to the GameObject
         /// </summary>
         /// <typeparam name="T">The Type of the component you want to add</typeparam>
-        public void AddComponent<T>() where T : Component, new() {
+        public T AddComponent<T>() where T : Component, new() {
             T component = new T();
             Components.Add(component);
             component.OnAdd(this);
+
+            return component;
         }
 
         //public void AddComponent(Component component) {
