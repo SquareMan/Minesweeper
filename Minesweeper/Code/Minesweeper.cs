@@ -19,9 +19,6 @@ namespace Minesweeper {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private GameObject _testObject;
-        private GameObject _testCircle;
-
         public Minesweeper() {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -40,11 +37,6 @@ namespace Minesweeper {
             _gameController.Initialize();
 
             SceneManager.Initialize(this);
-            _testObject = new GameObject();
-            _testObject.AddComponent<ComponentTest>();
-
-            _testCircle = new GameObject(_testObject, new Vector2(100, 100));
-            _testCircle.AddComponent<ComponentOtherTest>();
 
             base.Initialize();
 
