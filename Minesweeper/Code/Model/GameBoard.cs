@@ -34,7 +34,6 @@ namespace Minesweeper.Model {
             }
 
             PlaceBombs();
-            _tiles[5,5].Reveal();
         }
 
         public void PlaceBombs() {

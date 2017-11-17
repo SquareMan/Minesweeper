@@ -21,12 +21,13 @@ namespace Minesweeper.Controller {
         private readonly Minesweeper _game;
 
         private readonly GuiManager _gui;
-        private readonly InputListenerComponent _inputManager;
+        public readonly InputListenerComponent _inputManager;
         private GUIMainMenu _guiMainMenu;
 
         private GuiButtonControl _mainMenuButton;
 
         private Dictionary<Tile, GameObject> _tileToGameObjectMap;
+        private Dictionary<GameObject, Tile> _gameObjectToTileMap;
 
         public GameController(Minesweeper game) {
             Instance = this;
@@ -40,6 +41,7 @@ namespace Minesweeper.Controller {
 
             //Setup dictionary to hold tiles and their game objects
             _tileToGameObjectMap = new Dictionary<Tile, GameObject>();
+            _gameObjectToTileMap = new Dictionary<GameObject, Tile>();
         }
 
         public GameBoard GameBoard { get; private set; }
@@ -111,15 +113,25 @@ namespace Minesweeper.Controller {
         void CreateTileGameObject(Tile t) {
             GameObject go = new GameObject(null, new Vector2(t.Position.X, t.Position.Y));
             var renderer = go.AddComponent<TileRenderer>();
+
+            //This should probably be done by the renderer
             t.OnTileRevealed += renderer.OnTileRevealed;
 
+            renderer.OnTileClicked += RevealTile;
+
             _tileToGameObjectMap.Add(t, go);
+            _gameObjectToTileMap.Add(go, t);
+        }
+
+        void RevealTile(GameObject go) {
+            _gameObjectToTileMap[go].Reveal();
         }
 
         void DeleteTileGameObject(Tile t) {
             GameObject go = _tileToGameObjectMap[t];
 
             _tileToGameObjectMap.Remove(t);
+            _gameObjectToTileMap.Remove(go);
             //GameObject.Destroy(go);
             go.Destroy();
         }
