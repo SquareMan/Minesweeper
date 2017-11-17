@@ -95,6 +95,11 @@ namespace Minesweeper.View {
 
         public void Destroy() {
             Scene.GameObjects.Remove(this);
+
+            foreach (var component in Components) {
+                component.Destroy();
+            }
+
             Components = null;
             Scene = null;
             Transform = null;

@@ -7,9 +7,12 @@ namespace Minesweeper.View {
 
         public void OnAdd(GameObject parent) {
             Transform = parent.Transform;
+            Start();
         }
 
+        public virtual void Start() { }
         public virtual void Draw(SpriteBatch spriteBatch, GameTime gameTime) { }
         public virtual void Update(GameTime gameTime) { }
+        public virtual void Destroy() { }
     }
 }
