@@ -37,12 +37,16 @@ namespace Minesweeper.Model {
         }
 
         public void PlaceBombs() {
-            for (int x = 0; x < Width; x++) {
-                for (int y = 0; y < Height; y++) {
-                    //TODO: This places an uncertain amount of bombs, need to place the amount specified by Bombs
-                    if(rand.Next(Bombs) == 0)
-                        _tiles[x, y].AddBomb();
+            for (int i = 0; i < Bombs; i++) {
+                Tile tileToCheck = GetTile(rand.Next(Width), rand.Next(Height));
+
+                if (tileToCheck.IsBomb || tileToCheck.IsRevealed) {
+                    //Can't place here
+                    i--;
+                    continue;
                 }
+
+                tileToCheck.AddBomb();
             }
         }
 
