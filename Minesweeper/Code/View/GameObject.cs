@@ -15,6 +15,8 @@ namespace Minesweeper.View {
         public GameObject Parent;
         public List<GameObject> Children = new List<GameObject>();
 
+        internal bool _objectDestroyed = false;
+
         //GameObject()
         //GameObject(Name)
         //GameObject(Parent)
@@ -94,9 +96,16 @@ namespace Minesweeper.View {
         }
 
         public void Destroy() {
+            //Mark Object For Disposal
+            _objectDestroyed = true;
+        }
+
+        internal void Dispose()
+        {
             Scene.GameObjects.Remove(this);
 
-            foreach (var component in Components) {
+            foreach (var component in Components)
+            {
                 component.Destroy();
             }
 

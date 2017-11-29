@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Runtime.ExceptionServices;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
@@ -8,12 +9,14 @@ using MonoGame.Extended;
 namespace Minesweeper.View {
     public class TileRenderer : Component {
         public delegate void TileRendererDelegate(GameObject tileObject);
-        public event TileRendererDelegate OnTileClicked;
+        public event TileRendererDelegate OnTileLeftClicked;
+        public event TileRendererDelegate OnTileRightClicked;
 
         public static readonly int TileSize = 32;
 
-        private string bombNumber = "";
-        private Color color = Color.Black;
+        private string _bombNumber = "";
+        private Color _borderColor = Color.Black;
+        private Color _tileColor = Color.Gray;
 
         private Rectangle _bounds;
 
@@ -22,28 +25,41 @@ namespace Minesweeper.View {
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            spriteBatch.DrawRectangle(Transform.Position * TileSize, new Size2(TileSize, TileSize), color, 2f);
+            spriteBatch.FillRectangle(Transform.Position * TileSize, new Size2(TileSize, TileSize), _tileColor);
+            spriteBatch.DrawRectangle(Transform.Position * TileSize, new Size2(TileSize, TileSize), _borderColor, 2f);
 
-            if(bombNumber != "0")
-                spriteBatch.DrawString(Minesweeper.Font,bombNumber,Transform.Position * TileSize, Color.White);
+            if(_bombNumber != "0")
+                spriteBatch.DrawString(Minesweeper.Font,_bombNumber,Transform.Position * TileSize, Color.White);
         }
 
         public override void Update(GameTime gameTime) {
             //Check If We're Clicked
             MouseState state = Mouse.GetState();
-            if (state.IsLeftButtonReleased() && _bounds.Intersects(new Rectangle(new Point(state.X, state.Y), new Point(1)))) {
+            if (!_bounds.Intersects(new Rectangle(new Point(state.X, state.Y), new Point(1))))
+                return;
+
+            if (state.IsLeftButtonReleased()) {
                 //Reveal this tile
-                OnTileClicked?.Invoke(Transform.GameObject);
+                OnTileLeftClicked?.Invoke(Transform.GameObject);
+            }
+
+            if (state.IsRightButtonReleased()) {
+                //Toggle flag on this tile
+                OnTileRightClicked?.Invoke(Transform.GameObject);
             }
         }
 
         public void OnTileRevealed(int bombs) {
-            bombNumber = bombs.ToString();
-            color = Color.Gray;
+            _bombNumber = bombs.ToString();
+            _borderColor = Color.Gray;
+        }
+
+        public void OnTileFlagged(bool flag) {
+            _tileColor = flag ? Color.Red : Color.Gray;
         }
 
         public override void Destroy() {
-            OnTileClicked = null;
+            OnTileLeftClicked = null;
         }
     }
 }

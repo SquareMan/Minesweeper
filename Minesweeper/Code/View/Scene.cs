@@ -12,6 +12,11 @@ namespace Minesweeper.View {
         }
 
         public override void Update(GameTime gameTime) {
+            for (int i = GameObjects.Count - 1; i >= 0; i--) {
+                if(GameObjects[i]._objectDestroyed)
+                    GameObjects[i].Dispose();
+            }
+
             foreach (var go in GameObjects) {
                 go.Update(gameTime);
             }

@@ -5,7 +5,10 @@ using Minesweeper.Controller;
 namespace Minesweeper.Model {
     public class Tile {
         public delegate void IntDelegate(int num);
+        public delegate void BoolDelegate(bool flag);
+
         public event IntDelegate OnTileRevealed;
+        public event BoolDelegate OnTileFlagged;
 
         public readonly Point Position;
 
@@ -18,7 +21,11 @@ namespace Minesweeper.Model {
         public bool IsRevealed { get; private set; }
 
         public void ToggleFlag() {
+            //You can't flag a revealed tile
+            if (IsRevealed) return;
+
             IsFlagged = !IsFlagged;
+            OnTileFlagged?.Invoke(IsFlagged);
         }
 
         public void AddBomb() {
@@ -34,7 +41,7 @@ namespace Minesweeper.Model {
 
             if (IsBomb) {
                 //TODO: Gameover
-                return;
+                GameController.Instance.MainMenu();
             }
 
             IsRevealed = true;
