@@ -65,6 +65,7 @@ namespace Minesweeper {
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            InputHelper.Update();
             _gameController.Update(gameTime);
 
             base.Update(gameTime);

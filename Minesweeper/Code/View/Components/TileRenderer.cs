@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
+using Minesweeper.Model;
 using MonoGame.Extended;
 
 namespace Minesweeper.View {
@@ -30,7 +31,7 @@ namespace Minesweeper.View {
         public override void Update(GameTime gameTime) {
             //Check If We're Clicked
             MouseState state = Mouse.GetState();
-            if (state.LeftButton == ButtonState.Pressed && _bounds.Intersects(new Rectangle(new Point(state.X, state.Y), new Point(1)))) {
+            if (state.IsLeftButtonReleased() && _bounds.Intersects(new Rectangle(new Point(state.X, state.Y), new Point(1)))) {
                 //Reveal this tile
                 OnTileClicked?.Invoke(Transform.GameObject);
             }

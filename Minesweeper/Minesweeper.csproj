@@ -45,6 +45,7 @@
     <Compile Include="Code\Controller\GameController.cs" />
     <Compile Include="Code\Minesweeper.cs" />
     <Compile Include="Code\Model\GameBoard.cs" />
+    <Compile Include="Code\Model\InputHelper.cs" />
     <Compile Include="Code\Model\Tile.cs" />
     <Compile Include="Code\Program.cs" />
     <Compile Include="Code\View\Components\TileRenderer.cs" />
