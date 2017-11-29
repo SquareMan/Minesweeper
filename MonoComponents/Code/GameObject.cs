@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Minesweeper.View {
+namespace MonoComponents {
     public sealed class GameObject {
         //List of custom scripts that can be attached to a GameObject and run
         private List<Component> Components = new List<Component>();

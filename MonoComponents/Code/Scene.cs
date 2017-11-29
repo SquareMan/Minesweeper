@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Minesweeper.View {
+namespace MonoComponents {
     public class Scene : DrawableGameComponent {
         public List<GameObject> GameObjects = new List<GameObject>();
         private SpriteBatch SpriteBatch;

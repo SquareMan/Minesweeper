@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Minesweeper.Model;
 using Minesweeper.View;
 using Minesweeper.View.GUI;
+using MonoComponents;
 using MonoGame.Extended.Input.InputListeners;
 using MonoGame.Extended.NuclexGui;
 using MonoGame.Extended.NuclexGui.Controls.Desktop;

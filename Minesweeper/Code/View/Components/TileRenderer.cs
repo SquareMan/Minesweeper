@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
 using Minesweeper.Model;
+using MonoComponents;
 using MonoGame.Extended;
 
 namespace Minesweeper.View {

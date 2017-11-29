@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Minesweeper.View {
+namespace MonoComponents {
     public class Transform {
         public readonly GameObject GameObject;
 

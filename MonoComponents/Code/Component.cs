@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Minesweeper.View {
+namespace MonoComponents {
     public abstract class Component {
         public Transform Transform;
 
