@@ -47,7 +47,6 @@ namespace Minesweeper.Model {
             }
 
             IsRevealed = true;
-            GameController.Instance.GameBoard.OnTileRevealed();
 
             //Check number of neighboring bombs
             var neighbors = GetNeighbors();

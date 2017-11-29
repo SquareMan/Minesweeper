@@ -35,6 +35,7 @@ namespace Minesweeper.Model {
 
                     _tiles[x, y] = t;
                     OnTileCreated?.Invoke(t);
+                    t.OnTileRevealed += OnTileRevealed;
                 }
             }
 
@@ -56,7 +57,7 @@ namespace Minesweeper.Model {
             }
         }
 
-        public void OnTileRevealed() {
+        public void OnTileRevealed(int numOfBombs) {
             _safeTilesRemaining--;
 
             if (_safeTilesRemaining == 0) {
