@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Minesweeper.Controller;
 
 namespace Minesweeper.Model {
     public class GameBoard {
@@ -14,6 +16,8 @@ namespace Minesweeper.Model {
 
         private Random rand = new Random();
 
+        private int _safeTilesRemaining;
+
         private readonly Tile[,] _tiles;
 
         public GameBoard(int width, int height, int bombs) {
@@ -24,6 +28,7 @@ namespace Minesweeper.Model {
         }
 
         public void CreateBoard() {
+            _safeTilesRemaining = Width * Height;
             for (int x = 0; x < Width; x++) {
                 for (int y = 0; y < Height; y++) {
                     Tile t = new Tile(new Point(x, y));
@@ -47,6 +52,17 @@ namespace Minesweeper.Model {
                 }
 
                 tileToCheck.AddBomb();
+                _safeTilesRemaining--;
+            }
+        }
+
+        public void OnTileRevealed() {
+            _safeTilesRemaining--;
+
+            if (_safeTilesRemaining == 0) {
+                //TODO: WIN
+                Debug.WriteLine("Win");
+                GameController.Instance.MainMenu();
             }
         }
 

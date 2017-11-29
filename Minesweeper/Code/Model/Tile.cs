@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Minesweeper.Controller;
 
@@ -41,10 +42,12 @@ namespace Minesweeper.Model {
 
             if (IsBomb) {
                 //TODO: Gameover
+                Debug.WriteLine("Lose");
                 GameController.Instance.MainMenu();
             }
 
             IsRevealed = true;
+            GameController.Instance.GameBoard.OnTileRevealed();
 
             //Check number of neighboring bombs
             var neighbors = GetNeighbors();
