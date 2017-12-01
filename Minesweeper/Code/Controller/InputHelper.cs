@@ -12,8 +12,8 @@ namespace Minesweeper.Controller {
         private static MouseState _currentMouseState;
         private static MouseState _lastMouseState;
 
-        private static IReturnsGUIControl _lastFrameControl;
-        private static IReturnsGUIControl _currentFrameControl;
+        private static bool _overGUILastFrame;
+        private static bool _overGUIThisFrame;
 
         public static void Update() {
             _lastKeyboardState = _currentKeyboardState;
@@ -22,8 +22,8 @@ namespace Minesweeper.Controller {
             _lastMouseState = _currentMouseState;
             _currentMouseState = Mouse.GetState();
 
-            _lastFrameControl = _currentFrameControl;
-            _currentFrameControl = GameController.Instance.ActiveGUI;
+            _overGUILastFrame = _overGUIThisFrame;
+            _overGUIThisFrame = GameController.Instance.ActiveGUI.IsMouseOverControl();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Minesweeper.Controller {
         /// <returns>True if the left mouse button was released this frame</returns>
         public static bool IsLeftButtonReleased(this MouseState state) {
             return state.LeftButton == ButtonState.Released && _lastMouseState.LeftButton == ButtonState.Pressed 
-                && !_lastFrameControl.IsMouseOverControl() && !_currentFrameControl.IsMouseOverControl();
+                && !_overGUILastFrame && !_overGUIThisFrame;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Minesweeper.Controller {
         /// <returns>True if the left mouse button was pressed this frame</returns>
         public static bool IsLeftButtonPressed(this MouseState state) {
             return state.LeftButton == ButtonState.Pressed && _lastMouseState.LeftButton == ButtonState.Released 
-                && !_lastFrameControl.IsMouseOverControl() && !_currentFrameControl.IsMouseOverControl();
+                && !_overGUILastFrame && !_overGUIThisFrame;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Minesweeper.Controller {
         public static bool IsMiddleButtonReleased(this MouseState state)
         {
             return state.MiddleButton == ButtonState.Released && _lastMouseState.MiddleButton == ButtonState.Pressed
-                   && !_lastFrameControl.IsMouseOverControl() && !_currentFrameControl.IsMouseOverControl();
+                   && !_overGUILastFrame && !_overGUIThisFrame;
         }
         
         /// <summary>
@@ -85,7 +85,7 @@ namespace Minesweeper.Controller {
         public static bool IsMiddleButtonPressed(this MouseState state)
         {
             return state.MiddleButton == ButtonState.Pressed && _lastMouseState.MiddleButton == ButtonState.Released
-                   && !_lastFrameControl.IsMouseOverControl() && !_currentFrameControl.IsMouseOverControl();
+                   && !_overGUILastFrame && !_overGUIThisFrame;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Minesweeper.Controller {
         public static bool IsRightButtonReleased(this MouseState state)
         {
             return state.RightButton == ButtonState.Released && _lastMouseState.RightButton == ButtonState.Pressed
-                   && !_lastFrameControl.IsMouseOverControl() && !_currentFrameControl.IsMouseOverControl();
+                   && !_overGUILastFrame && !_overGUIThisFrame;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Minesweeper.Controller {
         public static bool IsRightButtonPressed(this MouseState state)
         {
             return state.RightButton == ButtonState.Pressed && _lastMouseState.RightButton == ButtonState.Released
-                   && !_lastFrameControl.IsMouseOverControl() && !_currentFrameControl.IsMouseOverControl();
+                   && !_overGUILastFrame && !_overGUIThisFrame;
         }
     }
 }
