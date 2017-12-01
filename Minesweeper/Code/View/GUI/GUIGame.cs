@@ -5,7 +5,7 @@ using MonoGame.Extended.NuclexGui.Controls;
 using MonoGame.Extended.NuclexGui.Controls.Desktop;
 
 namespace Minesweeper.View.GUI {
-    public class GUIGame : GuiControl
+    public class GUIGame : GuiControl, IReturnsGUIControl
     {
         private GuiButtonControl _mainMenuButton;
         private GuiButtonControl _optionsButton;
@@ -49,6 +49,10 @@ namespace Minesweeper.View.GUI {
         void Options(Object sender, EventArgs e)
         {
             Children.Add(_optionsWindow);
+        }
+
+        public bool IsMouseOverControl() {
+            return MouseOverControl != this && MouseOverControl != null;
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Minesweeper.Controller {
 
         private readonly GuiManager _gui;
         public readonly InputListenerComponent _inputManager;
+        public IReturnsGUIControl ActiveGUI { get; protected set; }
         private GUIMainMenu _guiMainMenu;
         private GUIGame _guiGame;
 
@@ -78,6 +79,7 @@ namespace Minesweeper.Controller {
             CurrentState = GameState.MainMenu;
             //_guiMainMenu.Open();
             _gui.Screen.Desktop.Children.Add(_guiMainMenu);
+            ActiveGUI = _guiMainMenu;
         }
 
         public void StartGame() {
@@ -90,6 +92,7 @@ namespace Minesweeper.Controller {
 
             _gui.Screen.Desktop.Children.Remove(_guiMainMenu);
             _gui.Screen.Desktop.Children.Add(_guiGame);
+            ActiveGUI = _guiGame;
         }
 
         public void GameOver() {
@@ -98,6 +101,7 @@ namespace Minesweeper.Controller {
             CurrentState = GameState.GameOver;
 
             _gui.Screen.Desktop.Children.Remove(_guiGame);
+            ActiveGUI = null;
         }
 
         public void QuitGame() {
