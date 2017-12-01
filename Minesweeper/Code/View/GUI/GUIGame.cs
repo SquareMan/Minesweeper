@@ -29,7 +29,7 @@ namespace Minesweeper.View.GUI {
 
             _optionsButton = new GuiButtonControl {
                 Name = "OptionsButton",
-                Bounds = new UniRectangle(new UniScalar(0.9f, -30), new UniScalar(0.9f, 0), 100, 24),
+                Bounds = new UniRectangle(new UniScalar(0.9f, -30), new UniScalar(0.9f, -8), 100, 24),
                 Text = "Options"
             };
             _optionsButton.Pressed += Options;

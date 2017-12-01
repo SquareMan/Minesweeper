@@ -85,7 +85,8 @@ namespace Minesweeper.Controller {
             GameBoard.OnTileCreated += CreateTileGameObject;
             GameBoard.OnTileDestroyed += DeleteTileGameObject;
             GameBoard.CreateBoard();
-            _guiMainMenu.Close();
+
+            _gui.Screen.Desktop.Children.Remove(_guiMainMenu);
             _gui.Screen.Desktop.Children.Add(_guiGame);
         }
 
@@ -96,8 +97,6 @@ namespace Minesweeper.Controller {
         public void Update(GameTime gameTime) {
             _inputManager.Update(gameTime);
             _gui.Update(gameTime);
-
-            _guiMainMenu.Update();
         }
 
         public void Draw(GameTime gameTime) {
