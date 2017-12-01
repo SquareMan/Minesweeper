@@ -15,7 +15,9 @@ namespace Minesweeper.Controller {
         public enum GameState {
             Initialization,
             MainMenu,
-            Running
+            Running,
+            GameOver,
+            Win
         }
 
         public static GameController Instance;
@@ -88,6 +90,14 @@ namespace Minesweeper.Controller {
 
             _gui.Screen.Desktop.Children.Remove(_guiMainMenu);
             _gui.Screen.Desktop.Children.Add(_guiGame);
+        }
+
+        public void GameOver() {
+            if(CurrentState == GameState.GameOver)
+                throw new Exception("The Game is already Over");
+            CurrentState = GameState.GameOver;
+
+            _gui.Screen.Desktop.Children.Remove(_guiGame);
         }
 
         public void QuitGame() {

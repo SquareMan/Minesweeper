@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
-using Minesweeper.Model;
 using MonoComponents;
 using MonoGame.Extended;
 
@@ -34,6 +33,9 @@ namespace Minesweeper.View {
         }
 
         public override void Update(GameTime gameTime) {
+            if (GameController.Instance.CurrentState != GameController.GameState.Running)
+                return;
+
             //Check If We're Clicked
             MouseState state = Mouse.GetState();
             if (!_bounds.Intersects(new Rectangle(new Point(state.X, state.Y), new Point(1))))

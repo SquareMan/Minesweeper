@@ -43,7 +43,8 @@ namespace Minesweeper.Model {
             if (IsBomb) {
                 //TODO: Gameover
                 Debug.WriteLine("Lose");
-                GameController.Instance.MainMenu();
+                GameController.Instance.GameOver();
+                return;
             }
 
             IsRevealed = true;

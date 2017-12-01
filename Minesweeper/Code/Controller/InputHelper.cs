@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace Minesweeper.Model {
+namespace Minesweeper.Controller {
     public static class InputHelper {
 
         private static KeyboardState _currentKeyboardState;
