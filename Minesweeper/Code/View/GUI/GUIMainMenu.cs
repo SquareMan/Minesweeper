@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using System.Diagnostics;
+using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
 using MonoGame.Extended.NuclexGui;
 using MonoGame.Extended.NuclexGui.Controls;

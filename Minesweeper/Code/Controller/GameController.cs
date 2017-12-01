@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Minesweeper.Model;
 using Minesweeper.View;
@@ -24,8 +25,7 @@ namespace Minesweeper.Controller {
         private readonly GuiManager _gui;
         public readonly InputListenerComponent _inputManager;
         private GUIMainMenu _guiMainMenu;
-
-        private GuiButtonControl _mainMenuButton;
+        private GUIGame _guiGame;
 
         private Dictionary<Tile, GameObject> _tileToGameObjectMap;
         private Dictionary<GameObject, Tile> _gameObjectToTileMap;
@@ -56,15 +56,8 @@ namespace Minesweeper.Controller {
             _gui.Initialize();
 
             _guiMainMenu = new GUIMainMenu();
-
-            _mainMenuButton = new GuiButtonControl
-            {
-                Name = "MainMenuButton",
-                Bounds = new UniRectangle(new UniScalar(0.9f, -50), new UniScalar(0.9f, 20), 100, 24),
-                Text = "Main Menu"
-            };
-            _mainMenuButton.Pressed += (sender, e) => { MainMenu(); };
-
+            _guiGame = new GUIGame();
+            
             GameBoard = new GameBoard(10, 10, 10);
         }
 
@@ -78,7 +71,7 @@ namespace Minesweeper.Controller {
                 GameBoard.OnTileDestroyed -= CreateTileGameObject;
                 GameBoard.ClearBoard();
 
-                _gui.Screen.Desktop.Children.Remove(_mainMenuButton);
+                _gui.Screen.Desktop.Children.Remove(_guiGame);
             }
             CurrentState = GameState.MainMenu;
             //_guiMainMenu.Open();
@@ -93,7 +86,7 @@ namespace Minesweeper.Controller {
             GameBoard.OnTileDestroyed += DeleteTileGameObject;
             GameBoard.CreateBoard();
             _guiMainMenu.Close();
-            _gui.Screen.Desktop.Children.Add(_mainMenuButton);
+            _gui.Screen.Desktop.Children.Add(_guiGame);
         }
 
         public void QuitGame() {

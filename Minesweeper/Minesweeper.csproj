@@ -49,6 +49,7 @@
     <Compile Include="Code\Model\Tile.cs" />
     <Compile Include="Code\Program.cs" />
     <Compile Include="Code\View\Components\TileRenderer.cs" />
+    <Compile Include="Code\View\GUI\GUIGame.cs" />
     <Compile Include="Code\View\GUI\GUIMainMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
