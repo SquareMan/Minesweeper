@@ -116,24 +116,14 @@ namespace Minesweeper.Controller {
         void CreateTileGameObject(Tile t) {
             GameObject go = new GameObject(null, new Vector2(t.Position.X, t.Position.Y));
             var renderer = go.AddComponent<TileRenderer>();
+            renderer.Initialize(t);
 
             //This should probably be done by the renderer
             t.OnTileRevealed += renderer.OnTileRevealed;
             t.OnTileFlagged += renderer.OnTileFlagged;
 
-            renderer.OnTileLeftClicked += RevealTile;
-            renderer.OnTileRightClicked += FlagTile;
-
             _tileToGameObjectMap.Add(t, go);
             _gameObjectToTileMap.Add(go, t);
-        }
-
-        void RevealTile(GameObject go) {
-            _gameObjectToTileMap[go].Reveal();
-        }
-
-        void FlagTile(GameObject go) {
-            _gameObjectToTileMap[go].ToggleFlag();
         }
 
         void DeleteTileGameObject(Tile t) {

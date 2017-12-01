@@ -44,7 +44,6 @@ namespace Minesweeper.Model {
                 //TODO: Gameover
                 Debug.WriteLine("Lose");
                 GameController.Instance.GameOver();
-                return;
             }
 
             IsRevealed = true;

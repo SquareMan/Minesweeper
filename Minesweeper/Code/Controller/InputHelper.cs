@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.NuclexGui.Controls;
 
 namespace Minesweeper.Controller {
     public static class InputHelper {
@@ -8,6 +9,9 @@ namespace Minesweeper.Controller {
 
         private static MouseState _currentMouseState;
         private static MouseState _lastMouseState;
+
+        private static GuiControl _lastFrameControl;
+        private static GuiControl _currentFrameControl;
 
         public static void Update() {
             _lastKeyboardState = _currentKeyboardState;

@@ -3,14 +3,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Minesweeper.Controller;
+using Minesweeper.Model;
 using MonoComponents;
 using MonoGame.Extended;
 
 namespace Minesweeper.View {
     public class TileRenderer : Component {
-        public delegate void TileRendererDelegate(GameObject tileObject);
-        public event TileRendererDelegate OnTileLeftClicked;
-        public event TileRendererDelegate OnTileRightClicked;
+        //public delegate void TileRendererDelegate(GameObject tileObject);
+        //public event TileRendererDelegate OnTileLeftClicked;
+        //public event TileRendererDelegate OnTileRightClicked;
 
         public static readonly int TileSize = 32;
 
@@ -19,13 +20,19 @@ namespace Minesweeper.View {
         private Color _tileColor = Color.Gray;
 
         private Rectangle _bounds;
+        private Tile _tile;
 
         public override void Start() {
             _bounds = new Rectangle((int)Transform.Position.X * TileSize, (int)Transform.Position.Y * TileSize, TileSize, TileSize);
         }
 
+        public void Initialize(Tile t) {
+            _tile = t;
+        }
+
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
-            spriteBatch.FillRectangle(Transform.Position * TileSize, new Size2(TileSize, TileSize), _tileColor);
+            spriteBatch.FillRectangle(
+                Transform.Position * TileSize, new Size2(TileSize, TileSize), _tile.IsBomb && (_tile.IsRevealed || GameController.Instance.CurrentState == GameController.GameState.GameOver) ? Color.DarkRed : _tileColor);
             spriteBatch.DrawRectangle(Transform.Position * TileSize, new Size2(TileSize, TileSize), _borderColor, 2f);
 
             if(_bombNumber != "0")
@@ -43,12 +50,14 @@ namespace Minesweeper.View {
 
             if (state.IsLeftButtonReleased()) {
                 //Reveal this tile
-                OnTileLeftClicked?.Invoke(Transform.GameObject);
+                //OnTileLeftClicked?.Invoke(Transform.GameObject);
+                _tile.Reveal();
             }
 
             if (state.IsRightButtonReleased()) {
                 //Toggle flag on this tile
-                OnTileRightClicked?.Invoke(Transform.GameObject);
+                //OnTileRightClicked?.Invoke(Transform.GameObject);
+                _tile.ToggleFlag();
             }
         }
 
@@ -62,7 +71,8 @@ namespace Minesweeper.View {
         }
 
         public override void Destroy() {
-            OnTileLeftClicked = null;
+            //OnTileLeftClicked = null;
+            _tile = null;
         }
     }
 }
