@@ -23,7 +23,15 @@ namespace Minesweeper.Controller {
             _currentMouseState = Mouse.GetState();
 
             _overGUILastFrame = _overGUIThisFrame;
-            _overGUIThisFrame = GameController.Instance.ActiveGUI.IsMouseOverControl();
+            _overGUIThisFrame = IsMouseOverGui();
+        }
+
+        public static bool IsMouseOverGui() {
+            if (GameController.Instance.ActiveGUI != null) {
+                return GameController.Instance.ActiveGUI.IsMouseOverControl();
+            }
+
+            return false;
         }
 
         /// <summary>
